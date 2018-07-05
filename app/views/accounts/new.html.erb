@@ -1,0 +1,20 @@
+<h1>Login to portal</h1>
+<%= form_for @new_account do |f| %>
+  <table>
+    <tbody>
+      <tr>
+        <td>学籍番号 (ログインID): </td>
+        <td>
+          <%= f.text_field :student_id %>
+        </td>
+      </tr>
+      <tr>
+        <td>パスワード: </td>
+        <td>
+          <%= f.password_field :login_password %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <%= f.submit "ログイン", disable_with: 'ログイン中...' %>
+<% end %>
