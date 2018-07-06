@@ -12,4 +12,8 @@ class Account < ApplicationRecord
     self.login_password = crypt.encrypt_and_sign(self.login_password)
   end
   
+  def decrypt(password)
+    crypt = ActiveSupport::MessageEncryptor.new(SECURE, CIPHER)
+    crypt.decrypt_and_verify(password)
+  end
 end
