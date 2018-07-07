@@ -1,5 +1,6 @@
 class Account < ApplicationRecord
   has_many :tokens
+  has_many :sessions
 
   validates :student_id, presence: true
   validates :login_password, presence: true
@@ -20,11 +21,11 @@ class Account < ApplicationRecord
     end
   end
 
-  private
-
   def match_password?(password)
     password == decrypt(self.login_password)
   end
+
+  private
 
   def decrypt(target)
     crypt = ActiveSupport::MessageEncryptor.new(SECURE, CIPHER)
