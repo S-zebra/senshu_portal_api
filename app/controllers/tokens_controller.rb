@@ -16,6 +16,15 @@ class TokensController < ApplicationController
     end
   end
 
+  def destroy
+    @target_token = Token.find(params[:id])
+    @target_token.available = false
+    if @target_token.save
+      flash[:notice] = "トークンは無効になりました。"
+      redirect_to :tokens
+    end
+  end
+
   private
 
   def confirm_login
