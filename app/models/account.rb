@@ -13,8 +13,21 @@ class Account < ApplicationRecord
     self.login_password = crypt.encrypt_and_sign(self.login_password)
   end
 
-  def decrypt(password)
+  class << self
+    def authenticate(id, password)
+      acc = Account.find_by(student_id: id)
+      acc if acc && acc.match_password?(password)
+    end
+  end
+
+  private
+
+  def match_password?(password)
+    password == decrypt(self.login_password)
+  end
+
+  def decrypt(target)
     crypt = ActiveSupport::MessageEncryptor.new(SECURE, CIPHER)
-    crypt.decrypt_and_verify(password)
+    crypt.decrypt_and_verify(target)
   end
 end

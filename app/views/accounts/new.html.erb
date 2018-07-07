@@ -1,4 +1,4 @@
-<h1>Login to portal</h1>
+<h1>新規登録</h1>
 <%= form_for @new_account do |f| %>
   <table>
     <tbody>
@@ -16,5 +16,6 @@
       </tr>
     </tbody>
   </table>
-  <%= f.submit "ログイン", disable_with: 'ログイン中...' %>
+  <%= f.submit "アカウント作成", disable_with: "作成中…" %>
 <% end %>
+すでにアカウントをお持ちですか？ <%= link_to "ログイン", :new_session %>してください
