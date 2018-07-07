@@ -4,4 +4,9 @@ Rails.application.routes.draw do
   resources :accounts
   resources :sessions, only: [:new, :create]
   resources :tokens
+  namespace :api, {format: "json"} do
+    namespace :v1 do
+      get "/timetable", to: "timetable#index"
+    end
+  end
 end
