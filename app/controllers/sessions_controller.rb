@@ -5,10 +5,10 @@ class SessionsController < ApplicationController
 
   def create
     allowed_param = params.permit(:student_id, :login_password)
-    @account = Account.authenticate(allowed_param[:login_password], allowed_param[:login_password])
+    @account = Account.authenticate(allowed_param[:student_id], allowed_param[:login_password])
     if @account
       session[:uid] = @account.id
-      session = Session.new(@account)
+      session = Session.new(account: @account)
       redirect_to :tokens if session.save
     else
       flash.alert = "パスワードが違います！"

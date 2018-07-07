@@ -1,0 +1,28 @@
+<h1><%= @account.student_id %> さんに関連付けられたトークン</h1>
+<% if @tokens %>
+  <table>
+    <tbody>
+      <tr>
+        <th>トークン</th>
+        <th>有効状態</th>
+      </tr>
+
+        <% @tokens.each do |t| %>
+          <tr>
+            <td>
+              <%= t.token %>
+            </td>
+            <td>
+              <%= t.available ? "有効" : "無効" %>
+            </td>
+            <td>
+              <%= link_to "無効にする", token_path(t), method: :delete %>
+            </td>
+          </tr>
+        <% end %>
+    </tbody>
+  </table>
+<% else %>
+  関連付けられたトークンはありません。
+<% end %>
+<%= link_to "新規作成", :tokens, method: :post %>
