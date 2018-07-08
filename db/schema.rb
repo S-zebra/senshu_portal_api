@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_07_043559) do
+ActiveRecord::Schema.define(version: 2018_07_08_063340) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "student_id", null: false
@@ -18,6 +18,19 @@ ActiveRecord::Schema.define(version: 2018_07_07_043559) do
     t.string "generated_hash"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "lectures", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.integer "day_of_week", null: false
+    t.integer "slot", null: false
+    t.string "lecture_name", null: false
+    t.string "teacher_name", null: false
+    t.string "classroom_name", null: false
+    t.string "change_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_lectures_on_account_id"
   end
 
   create_table "sessions", force: :cascade do |t|

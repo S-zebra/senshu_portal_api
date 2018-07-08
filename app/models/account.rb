@@ -1,6 +1,7 @@
 class Account < ApplicationRecord
-  has_many :tokens
-  has_many :sessions
+  has_many :tokens, dependent: :destroy
+  has_many :sessions, dependent: :destroy
+  has_many :lectures, dependent: :destroy
 
   validates :student_id, presence: true
   validates :login_password, presence: true
@@ -27,6 +28,6 @@ class Account < ApplicationRecord
   end
 
   def match_password?(password)
-    password == decrypt(self.login_password)
+    password == decrypt_password
   end
 end
