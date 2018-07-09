@@ -2,14 +2,14 @@ class Api::V1::TimetableController < ApplicationController
   def index
     a_params = params.permit(:token, :force_refresh)
     token = a_params[:token]
-    @account = Token.find_by(token: token).account
+    @account = Token.find_by(token: token, available: true).account
     @lectures = Lecture.where(account: @account)
     if @lectures.size == 0 || a_params[:force_refresh]
       student_id = @account.student_id
       login_password = @account.decrypt_password
       delete_old_data
       parse(PortalCommunicator.get_page(student_id, login_password))
-      redirect_to action: "index", token: token
+      #redirect_to action: "index", token: token
     end
   end
 
@@ -17,7 +17,7 @@ class Api::V1::TimetableController < ApplicationController
 
   def delete_old_data
     Lecture.where(account: @account).each do |d|
-      d.destroy
+      d.destroy!
     end
   end
 
@@ -46,7 +46,7 @@ class Api::V1::TimetableController < ApplicationController
           classroom_name: text_nodes[cr_index].split(/\(/)[0].gsub(/^\s+|\s+$/, ""),
           change_status: images.first ? images.first.attribute("title").value : nil,
         )
-        lecture.save
+        lecture.save!
       end
     end
   end
