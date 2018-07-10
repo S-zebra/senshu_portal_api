@@ -15,4 +15,10 @@ class SessionsController < ApplicationController
       redirect_to action: "new"
     end
   end
+
+  def destroy
+    session.delete(:uid)
+    flash[:notice] = "ログアウトしました"
+    redirect_to :root
+  end
 end

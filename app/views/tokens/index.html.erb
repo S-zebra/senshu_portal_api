@@ -1,5 +1,9 @@
-<h1><%= @account.student_id %> さんに関連付けられたトークン</h1>
-<% if @tokens %>
+<h1>トークン一覧</h1>
+<div class="container-user-info">
+  <%= @account_student_id %>
+  <%= link_to  "ログアウト", session_path(@account), method: :delete %>
+</div>
+<% if @tokens && @tokens.size > 0 %>
   <table>
     <tbody>
       <tr>
@@ -15,9 +19,11 @@
             <td>
               <%= t.available ? "有効" : "無効" %>
             </td>
+            <% if t.available %>
             <td>
               <%= link_to "無効にする", token_path(t), method: :delete %>
             </td>
+            <% end %>
           </tr>
         <% end %>
     </tbody>

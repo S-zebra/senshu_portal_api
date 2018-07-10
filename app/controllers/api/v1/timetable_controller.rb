@@ -9,7 +9,6 @@ class Api::V1::TimetableController < ApplicationController
       login_password = @account.decrypt_password
       delete_old_data
       parse(PortalCommunicator.get_page(student_id, login_password))
-      #redirect_to action: "index", token: token
     end
   end
 

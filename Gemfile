@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'has_secure_token', '>=1.0.0'
 gem 'mechanize'
+gem 'restful_error'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

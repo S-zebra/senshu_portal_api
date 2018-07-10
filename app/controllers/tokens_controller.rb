@@ -2,7 +2,6 @@ class TokensController < ApplicationController
   before_action :confirm_login
 
   def index
-    @account = Account.find(session[:uid])
     @tokens = Token.where(account: @account) #find_byじゃないのね！
   end
 
@@ -28,6 +27,12 @@ class TokensController < ApplicationController
   private
 
   def confirm_login
-    redirect_to :root if !session[:uid]
+    if session[:uid] && Account.exists?(id: session[:uid])
+      @account = Account.find(session[:uid])
+    else
+      flash[:alert] = "不正な画面遷移です。もう一度やり直してください。"
+      session.delete(:uid)
+      redirect_to :root and return
+    end
   end
 end
