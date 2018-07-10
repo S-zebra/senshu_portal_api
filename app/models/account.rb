@@ -7,16 +7,25 @@ class Account < ApplicationRecord
   validates :login_password, presence: true
   before_save :encrypt
 
-  SECURE = File.read("#{Rails.root}/config/master.key").chomp
+  #  secure = File.read("#{Rails.root}/config/master.key").chomp
+  key = Secure.first
+  secure = ""
+  if key
+    secure = key.enc_key
+  else
+    new_key = Secure.new(sec_key: SecureRandom.hex(64))
+    new_key.save!
+    secure = new_key.sec_key
+  end
   CIPHER = "aes-256-cbc"
 
   def encrypt
-    crypt = ActiveSupport::MessageEncryptor.new(SECURE, CIPHER)
+    crypt = ActiveSupport::MessageEncryptor.new(secure, CIPHER)
     self.login_password = crypt.encrypt_and_sign(self.login_password)
   end
 
   def decrypt_password
-    crypt = ActiveSupport::MessageEncryptor.new(SECURE, CIPHER)
+    crypt = ActiveSupport::MessageEncryptor.new(secure, CIPHER)
     crypt.decrypt_and_verify(self.login_password)
   end
 
