@@ -8,24 +8,28 @@ class Account < ApplicationRecord
   before_save :encrypt
 
   #  secure = File.read("#{Rails.root}/config/master.key").chomp
-  key = Secure.first
-  secure = ""
-  if key
-    secure = key.enc_key
-  else
-    new_key = Secure.new(enc_key: SecureRandom.hex(64))
-    new_key.save!
-    secure = new_key.sec_key
+  def get_key
+    key = Secure.first
+    secure = ""
+    if key != nil
+      secure = key.enc_key
+    else
+      new_key = Secure.new(enc_key: SecureRandom.hex(16))
+      new_key.save!
+      secure = new_key.enc_key
+    end
+    secure
   end
+
   CIPHER = "aes-256-cbc"
 
   def encrypt
-    crypt = ActiveSupport::MessageEncryptor.new(secure, CIPHER)
+    crypt = ActiveSupport::MessageEncryptor.new(get_key, CIPHER)
     self.login_password = crypt.encrypt_and_sign(self.login_password)
   end
 
   def decrypt_password
-    crypt = ActiveSupport::MessageEncryptor.new(secure, CIPHER)
+    crypt = ActiveSupport::MessageEncryptor.new(get_key, CIPHER)
     crypt.decrypt_and_verify(self.login_password)
   end
 
