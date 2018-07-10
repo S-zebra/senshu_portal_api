@@ -13,7 +13,7 @@ class Account < ApplicationRecord
   if key
     secure = key.enc_key
   else
-    new_key = Secure.new(sec_key: SecureRandom.hex(64))
+    new_key = Secure.new(enc_key: SecureRandom.hex(64))
     new_key.save!
     secure = new_key.sec_key
   end
