@@ -40,7 +40,7 @@ class Api::V1::TimetableController < ApplicationController
           account: @account,
           day_of_week: dow + 1,
           slot: slot - 2,
-          lecture_name: cell.css("a").first.content.gsub(/[\[\]]/, ""),
+          lecture_name: cell.css("a").last.content.gsub(/[\[\]]/, ""),
           teacher_name: text_nodes[tn_index].split(/\]/)[1].gsub(/^\s+|\s+$/, ""),
           classroom_name: text_nodes[cr_index].gsub(/^\s+|\s+$/, "").split("(")[0].gsub(/\s+$/, ""),
           change_status: images.first ? images.first.attribute("title").value : nil,
