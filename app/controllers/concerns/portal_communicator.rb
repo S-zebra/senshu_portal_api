@@ -16,15 +16,6 @@ module PortalCommunicator
     result = (page.root.at(".login-error at") == nil)
   end
 
-  def get_page(id, password, page = MY_PAGE_URL)
-    browser = login(id, password)
-    res = browser.get(page).root
-    logout(browser)
-    res
-  end
-
-  # private
-
   def login(id, pass)
     browser = Mechanize.new
     page = nil
@@ -44,7 +35,6 @@ module PortalCommunicator
   end
 
   module_function :can_login?
-  module_function :get_page
   module_function :login
   module_function :logout
 end

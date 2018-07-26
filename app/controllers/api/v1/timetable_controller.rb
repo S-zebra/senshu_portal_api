@@ -1,14 +1,17 @@
 class Api::V1::TimetableController < ApplicationController
+  after_action :logout
+
   def index
     a_params = params.permit(:token, :force_refresh)
     token = a_params[:token]
     @account = Token.find_by(token: token, available: true).account
     @lectures = Lecture.where(account: @account)
-    if @lectures.size == 0 || a_params[:force_refresh]
+    if @lectures.size == 0 || a_params[:force_refresh] == "true"
       student_id = @account.student_id
       login_password = @account.decrypt_password
       delete_old_data
-      parse(PortalCommunicator.get_page(student_id, login_password))
+      @browser = PortalCommunicator.login(student_id, login_password)
+      parse(@browser.get(PortalCommunicator::MY_PAGE_URL).root)
     end
   end
 
@@ -48,5 +51,9 @@ class Api::V1::TimetableController < ApplicationController
         lecture.save!
       end
     end
+  end
+
+  def logout
+    PortalCommunicator.logout(@browser)
   end
 end
