@@ -2,6 +2,7 @@ class Account < ApplicationRecord
   has_many :tokens, dependent: :destroy
   has_many :sessions, dependent: :destroy
   has_many :lectures, dependent: :destroy
+  has_many :message_headers, dependent: :destroy
 
   validates :student_id, presence: true
   validates :login_password, presence: true

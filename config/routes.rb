@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   namespace :api, {format: "json"} do
     namespace :v1 do
       get "/timetable", to: "timetable#index"
+      namespace :messages do
+        get "/list", to: "list#index"
+      end
     end
   end
 end

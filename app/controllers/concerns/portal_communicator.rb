@@ -2,6 +2,7 @@ module PortalCommunicator
   LOGIN_URL = "https://sps.acc.senshu-u.ac.jp/ActiveCampus/module/Login.php"
   MY_PAGE_URL = "https://sps.acc.senshu-u.ac.jp/ActiveCampus/module/MyPage.php"
   CHANGES_URL = "https://sps.acc.senshu-u.ac.jp/ActiveCampus/module/Kyuko.php"
+  MESSAGES_URL = "https://sps.acc.senshu-u.ac.jp/ActiveCampus/module/Message.php?mode=backno"
 
   def can_login?(id, pass)
     browser = Mechanize.new
@@ -18,6 +19,7 @@ module PortalCommunicator
 
   def login(id, pass)
     browser = Mechanize.new
+    browser.log = Logger.new $stdout
     page = nil
     browser.get(LOGIN_URL).form_with(name: "login_form") { |f|
       f.login = id
