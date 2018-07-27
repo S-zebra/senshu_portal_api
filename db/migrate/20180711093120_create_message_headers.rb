@@ -1,6 +1,7 @@
 class CreateMessageHeaders < ActiveRecord::Migration[5.2]
   def change
     create_table :message_headers do |t|
+      t.references :account, null: false
       t.string :title, null: false
       t.string :sender, null: false
       t.datetime :post_date, null: false
