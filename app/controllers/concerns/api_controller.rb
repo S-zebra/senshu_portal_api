@@ -1,14 +1,19 @@
 class ApiController < ActionController::Base
   # include RestfulError::ActionController
+
   protect_from_forgery with: :null_session
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_token
+  rescue_from ArgumentError, with: :invalid_parameter
 
   before_action :authenticate
   after_action :logout
 
   def invalid_token(e)
-    code = ActionDispatch::ExceptionWrapper.new(nil, e).status_code
-    render json: {status: code, message: "Invalid token"}, status: code
+    render json: {status: 403, message: "Invalid token"}, status: 403
+  end
+
+  def invalid_parameter(e)
+    render json: {status: 400, message: "Invalid parameter", detailMessage: e.message}, status: 400
   end
 
   def authenticate
