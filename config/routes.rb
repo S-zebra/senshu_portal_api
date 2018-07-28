@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get "/timetable", to: "timetable#index"
       namespace :messages do
         get "/list", to: "list#index"
+        get "/headlines", to: "headlines#index"
       end
     end
   end
