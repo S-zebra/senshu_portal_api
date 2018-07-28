@@ -11,7 +11,6 @@ class Api::V1::Messages::HeadlinesController < ApiController
       title_col = msg.children[3]
       next if !title_col
       @headers << MessageHeader.new(
-        account: @account,
         title: title_col.at("a").text,
         sender: msg.children[5].at("span").text.gsub(/^\s+|\n.+$/, ""),
         post_date: DateTime.parse(msg.children[1].text),

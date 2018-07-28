@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_27_143118) do
+ActiveRecord::Schema.define(version: 2018_07_28_111821) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "student_id", null: false
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2018_07_27_143118) do
   end
 
 # Could not dump table "message_headers" because of following StandardError
-#   Unknown type 'account_id' for column 'account_id'
+#   Unknown type '' for column 'account_id'
 
   create_table "secures", force: :cascade do |t|
     t.string "enc_key", null: false
