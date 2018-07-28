@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_26_153546) do
+ActiveRecord::Schema.define(version: 2018_07_27_143118) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "student_id", null: false
